@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>project playlist ben hagag</title>
+  <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/jquery.js"></script>
+  <script src="js/circletype.min.js"></script>
+  <script src="js/jquery.lettering.js"></script>
+  <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <!-- nav barr  -->
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#" data-toggle="modal" data-target="#addplaylist" style="color: white">
+          <span class="glyphicon glyphicon-plus-sign"></span>Add New Playlist</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li id="bensprojecttomove">
+            <a id="bensproject">Ben Hagag Playlist Project!</a>
+          </li>
+        </ul>
+        <div class="nav navbar-nav navbar-right">
+          <form class="navbar-form navbar-right" action="#">
+            <button class="btn btn-default" type="button" id="clicktoshowall">Show all Playlists</button>
+            <div class="input-group">
+              <input type="text" class="form-control" oninput="searchplaylist()" placeholder="Search Playlist" name="search" id="searchinput">
+              <div class="input-group-btn">
+                <button class="btn btn-default" type="button">
+                  <i class="glyphicon glyphicon-search"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!-- end of nav bar  -->
+
+
+  <div class="container">
+
+
+
+    <!-- for show the player -->
+    <div id="player">
+    </div>
+
+
+
+    <!-- all playlists to show  -->
+    <div class="main-playlists"></div>
+
+    <!-- close for container -->
+  </div>
+
+
+
+
+  <!-- ====================================================================== -->
+  <!-- modal for remove playlist !  -->
+
+  <div id="removeplaylist" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">WARNING!</h4>
+        </div>
+        <div class="modal-body">
+          <p id="removeList"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal" id="remove-button-playlist">YES</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">NO</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- end of modal remove  -->
+
+  <!-- ======================================================================================= -->
+
+  <!-- modal for add playlist !  -->
+
+  <div id="addplaylist" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- div for add playlist  -->
+      <form id="addplaylistform">
+        <div class="modal-content addplaylistclass">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Add New Playlist!</h4>
+          </div>
+          <div class="modal-body">
+            <img src="images/playlsitimage.jpg" alt="" id="imgforadd">
+            <div id="inputsadd">
+              <div class="form-group">
+                <label for="playlistname">Playlist Name:</label>
+                <input type="text" required class="form-control playlistname" placeholder="Enter Playlist Name" name="playlistnameadd" id="playlistnameadd">
+              </div>
+              <br>
+              <div class="form-group">
+                <label for="playlisturl">Playlist URL Image:</label>
+                <input type="text" required class="form-control playlisturl" placeholder="http://" name="playlisturladd" id="playlisturladd"
+                  oninput="checkaddurlimage()">
+                <small id="addurleror"></small>
+              </div>
+              <br>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="modal-btn-addplaylist">
+              <input type="submit" class="btn btn-warning" id="nexttoadd" value="Next">
+              <button type="reset" class="btn btn-warning resstfieldsplaylist">Reset Fields</button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <!-- end for div add playlist -->
+      <!-- ================================ -->
+      <!-- this div is for add songs !  -->
+      <form id="addsongsform">
+        <div class="modal-content addsongstoplaylist">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Add songs To Playlist</h4>
+          </div>
+          <div class="modal-body">
+            <!-- <div class="songsaddmodal"> -->
+            <div class="newsongtoadd">
+              <div class="form-group add-songs-form">
+                <label for="songname">Song Name:</label>
+                <input type="text" required class="form-songs form-control songname" placeholder="Enter Song Name" name="songname">
+              </div>
+              <div class="form-group add-songs-form">
+                <label for="songturl">Song URL:</label>
+                <input type="text" required class="form-songs form-control songurl" placeholder="http://" name="songurl" oninput="checkaddurlsong()">
+                <small class="erorsogurladd"></small>
+              </div>
+            </div>
+            <div class="addmoresongstomoadal"></div>
+            <!-- </div> -->
+            <div class="addsong+">
+              <button type="button" id="addsongtoadd" class="fa fa-plus btn btn-primary" style="font-size:20px">Add another song</button>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-warning" id="finishsave">Finish&amp;Save</button>
+          </div>
+        </div>
+      </form>
+      <!-- end of add songs div  -->
+
+
+    </div>
+  </div>
+
+  <!-- end of modal add playlist  -->
+  <!-- ======================================================================== -->
+
+  <!-- ==================================================== -->
+  <!-- modal edit pplaylist  -->
+
+  <div id="editplaylist" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- div for edit playlist  -->
+      <form id="editplaylistform">
+        <div class="modal-content editplaylistclass">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Edit Playlist!</h4>
+          </div>
+          <div class="modal-body">
+            <img src="" alt="" id="imgforedit">
+            <div id="inputsadd">
+              <div class="form-group">
+                <label for="playlistname">Playlist Name:</label>
+                <input type="text" required class="form-control playlistname" placeholder="Enter Playlist Name" name="playlistname" id="playlistnameedit">
+              </div>
+              <br>
+              <div class="form-group">
+                <label for="playlisturl">Playlist URL Image:</label>
+                <input type="text" required class="form-control playlisturl" placeholder="http://" name="playlisturl" id="playlisturledit"
+                  oninput="checkediturlimage()">
+                <small id="editplaylisturleror"></small>
+              </div>
+              <br>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="modal-btn-addplaylist">
+              <button type="submit" class="btn btn-warning" id="nexttoedit">Next</button>
+              <button type="reset" class="btn btn-warning resstfieldsplaylist">Reset Fields</button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <!-- end for div edit playlist -->
+      <!-- ========================================== -->
+      <!-- this div is for edit songs !  -->
+      <form id="editsongsform">
+        <div class="modal-content editsongsplaylist">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Edit songs of Playlist</h4>
+          </div>
+          <div class="modal-body">
+            <div class="addmoresongstomoadaledit"></div>
+            <div class="addsong+">
+              <button type="button" id="addsongtoedit" class="fa fa-plus btn btn-primary" style="font-size:20px">Add another song</button>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-warning" id="finishsaveedit">Finish&amp;Save</button>
+          </div>
+        </div>
+      </form>
+      <!-- end of edit songs div  -->
+
+
+    </div>
+  </div>
+
+  <!-- end of modal edit playlist  -->
+  <script src="js/script.js"></script>
+</body>
+
+</html>
